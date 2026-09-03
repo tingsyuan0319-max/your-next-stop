@@ -1174,6 +1174,35 @@ body {
     padding: 14px 14px;
     gap: 12px;
     border-radius: 14px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Strictly disable any sticky hover on mobile phones */
+  .option-item:hover {
+    border-color: var(--border-light) !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .option-item:hover .option-letter {
+    background: var(--bg-cream) !important;
+    color: var(--text-dark) !important;
+    border-color: var(--border-dashed) !important;
+  }
+
+  .option-item:active,
+  .option-item.selected {
+    background: #FFF5F0 !important;
+    border-color: var(--accent-red) !important;
+    transform: scale(0.98) !important;
+  }
+
+  .option-item:active .option-letter,
+  .option-item.selected .option-letter {
+    background: var(--accent-red) !important;
+    color: #FFFFFF !important;
+    border-color: var(--accent-red) !important;
   }
 
   .option-letter {

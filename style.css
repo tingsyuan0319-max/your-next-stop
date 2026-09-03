@@ -1041,6 +1041,15 @@ body {
    7. MOBILE RESPONSIVE MEDIA QUERIES (320px - 600px)
    =================================================== */
 @media (max-width: 600px) {
+  /* 手機版：取消強制換行，讓文字隨螢幕寬度自然流動折行 */
+  .option-text-main br,
+  .result-poetic-quote br,
+  .blind-quote-text br,
+  .result-comfort-subtitle br,
+  .magazine-subtitle br {
+    display: none;
+  }
+
   .app-container {
     padding: 16px 14px 40px;
   }

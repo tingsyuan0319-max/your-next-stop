@@ -1,0 +1,1038 @@
+/* ===================================================
+   登機倒數：測一張暫停生活的單程機票
+   Cream Editorial Design System (繁中全圓潤字體版)
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Space+Mono:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'jf-openhuninn';
+  src: url('https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-2.0.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-cream: #F7F4EB;
+  --bg-card: #FCFBF7;
+  --bg-card-alt: #FFFFFF;
+  --text-dark: #2B2825;
+  --text-muted: #7A7268;
+  --text-light: #9E9486;
+  
+  --accent-red: #A84D3A;
+  --accent-red-light: rgba(168, 77, 58, 0.12);
+  --accent-green: #3E5948;
+  --accent-green-light: rgba(62, 89, 72, 0.12);
+  --accent-gold: #C4975A;
+  --accent-gold-light: rgba(196, 151, 90, 0.15);
+
+  --border-light: #E5DFD3;
+  --border-dashed: #D4C9B8;
+  --shadow-soft: 0 10px 35px rgba(60, 48, 35, 0.08);
+  --shadow-lift: 0 16px 40px rgba(60, 48, 35, 0.13);
+  
+  /* 全面採用繁體中文 100% 統一圓潤字體（解決日文字體缺少「你」字型的問題） */
+  --font-round: "Hiragino Maru Gothic ProN", "Hiragino Sans Rounded", "jf-openhuninn", "Nunito", -apple-system, system-ui, sans-serif;
+  --font-serif: "Hiragino Maru Gothic ProN", "Hiragino Sans Rounded", "jf-openhuninn", "Nunito", system-ui, sans-serif;
+  --font-sans: "Hiragino Maru Gothic ProN", "Hiragino Sans Rounded", "jf-openhuninn", "Nunito", system-ui, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-ticket: 18px;
+}
+
+/* Base & Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: var(--font-round);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Subtle Paper Texture Noise Overlay */
+.paper-texture {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 999;
+  background-image: radial-gradient(#2b2825 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Decorative Magazine Border Lines */
+.page-frame {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 998;
+  display: none;
+}
+@media (min-width: 768px) {
+  .page-frame { display: block; }
+}
+
+/* Audio Vinyl Switch (Top-Right Floating) */
+.audio-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vinyl-record {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #222 25%, #111 26%, #282828 40%, #1a1a1a 60%, #333 75%, #151515 100%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 0 4px rgba(255,255,255,0.15);
+  border: 2px solid #D4C9B8;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vinyl-record:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl-center {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  border: 2px solid #FFFFFF;
+}
+
+.vinyl-record.playing {
+  animation: rotateVinyl 4s linear infinite;
+}
+
+@keyframes rotateVinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  background: rgba(252, 251, 247, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  font-weight: 700;
+}
+
+/* Container & Views Layout */
+.app-container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.view-section {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================================================
+   1. LANDING COVER VIEW (首頁)
+   =================================================== */
+.magazine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--border-dashed);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.editorial-badge {
+  display: inline-block;
+  font-family: var(--font-round);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent-red);
+  background: var(--accent-red-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.magazine-cover-title {
+  font-family: var(--font-round);
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.magazine-cover-title span {
+  display: block;
+  color: var(--accent-red);
+  font-size: 2.1rem;
+  font-weight: 900;
+}
+
+.magazine-subtitle {
+  font-family: var(--font-round);
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 28px;
+  border-left: 3px solid var(--accent-gold);
+  padding-left: 14px;
+}
+
+.landing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.passenger-input-group {
+  margin-bottom: 22px;
+}
+
+.passenger-label {
+  display: block;
+  font-family: var(--font-round);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.passenger-label span {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--accent-gold);
+  font-size: 16px;
+}
+
+.passenger-input {
+  width: 100%;
+  padding: 14px 14px 14px 44px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-round);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.passenger-input:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 3px var(--accent-red-light);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--text-dark);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-round);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(43, 40, 37, 0.25);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(43, 40, 37, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.landing-footer-notes {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+/* ===================================================
+   2. RUNWAY PROGRESS BAR (跑道進度條)
+   =================================================== */
+.runway-progress-container {
+  margin-bottom: 24px;
+}
+
+.runway-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: var(--font-round);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.runway-track {
+  width: 100%;
+  height: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.runway-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--border-dashed) 0px,
+    var(--border-dashed) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
+
+.runway-fill {
+  position: absolute;
+  left: 0;
+  height: 3px;
+  background: var(--accent-red);
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.runway-airplane {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  line-height: 1;
+  transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 2px 4px rgba(168, 77, 58, 0.3));
+}
+
+/* ===================================================
+   3. QUESTION & OPTIONS CARD (題目與選項)
+   =================================================== */
+.quiz-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 30px 24px;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-header-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.quiz-number-stamp {
+  font-family: var(--font-round);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-red);
+  background: var(--accent-red-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+
+.question-title {
+  font-family: var(--font-round);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.55;
+  color: var(--text-dark);
+  margin-bottom: 22px;
+}
+
+.question-subtitle {
+  font-family: var(--font-round);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-top: -12px;
+  margin-bottom: 20px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.option-item {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.option-item:hover {
+  border-color: var(--accent-red);
+  background: #FFFCFA;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(168, 77, 58, 0.08);
+}
+
+.option-item:active {
+  transform: scale(0.99);
+}
+
+.option-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-cream);
+  border: 1.5px solid var(--border-dashed);
+  color: var(--text-dark);
+  font-family: var(--font-round);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0;
+  transition: all 0.2s;
+}
+
+.option-item:hover .option-letter {
+  background: var(--accent-red);
+  color: #FFFFFF;
+  border-color: var(--accent-red);
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-text-main {
+  font-family: var(--font-round);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.65;
+}
+
+.option-subtext {
+  font-family: var(--font-round);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ===================================================
+   4. SOUL QUOTE BLIND PICK (靈魂盲選三選一)
+   =================================================== */
+.blind-pick-intro {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.blind-pick-tag {
+  font-family: var(--font-round);
+  font-size: 12px;
+  color: var(--accent-red);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.blind-pick-title {
+  font-family: var(--font-round);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.blind-pick-desc {
+  font-family: var(--font-round);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.blind-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blind-card {
+  background: #FFFFFF;
+  border: 1.5px dashed var(--border-dashed);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-soft);
+}
+
+.blind-card:hover {
+  border-color: var(--accent-red);
+  border-style: solid;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  background: #FFFDFB;
+}
+
+.blind-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--font-round);
+  font-size: 11px;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.blind-card-stamp {
+  font-family: var(--font-round);
+  font-size: 10px;
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.blind-quote-text {
+  font-family: var(--font-round);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.8;
+  position: relative;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.blind-card-action {
+  margin-top: 14px;
+  text-align: right;
+  font-family: var(--font-round);
+  font-size: 12px;
+  color: var(--accent-red);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ===================================================
+   5. LOADING SCREEN (飛機繞地球轉場動畫)
+   =================================================== */
+.loading-box {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.globe-orbit-container {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 36px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.retro-globe {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #EFE8DA, #D8CEBE 70%, #B8AC9A 100%);
+  border: 2px solid var(--text-dark);
+  box-shadow: inset -6px -6px 16px rgba(0,0,0,0.1), 0 10px 25px rgba(60, 48, 35, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.globe-grid-lines {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(43, 40, 37, 0.25);
+}
+
+.globe-lat {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(43, 40, 37, 0.2);
+}
+
+.globe-lon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 60px;
+  transform: translateX(-50%);
+  border: 1px dashed rgba(43, 40, 37, 0.2);
+  border-radius: 50%;
+}
+
+.orbit-ring {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--accent-red);
+  animation: rotateOrbit 3.2s linear infinite;
+}
+
+.orbiting-airplane {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 5px rgba(168, 77, 58, 0.4));
+}
+
+@keyframes rotateOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.typewriter-status {
+  font-family: var(--font-round);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  min-height: 38px;
+  margin-bottom: 12px;
+}
+
+.loading-subtext {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+/* ===================================================
+   6. RESULT VIEW & BOARDING PASS TICKET
+   =================================================== */
+.result-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.result-congrats {
+  font-family: var(--font-round);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--accent-red);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-main-title {
+  font-family: var(--font-round);
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+.result-comfort-subtitle {
+  font-family: var(--font-round);
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 10px auto 0;
+  text-align: center;
+}
+
+.ticket-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-lift);
+  margin-bottom: 26px;
+  position: relative;
+}
+
+.ticket-image-container {
+  width: 100%;
+  border-radius: var(--radius-ticket);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(60, 48, 35, 0.12);
+  border: 1.5px solid var(--border-light);
+  margin-bottom: 20px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.ticket-img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius-ticket) - 4px);
+  display: block;
+}
+
+.result-quote-box {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  padding: 26px 20px 22px;
+  margin-bottom: 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.quote-city-badge {
+  display: inline-block;
+  font-family: var(--font-round);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--accent-green);
+  background: var(--accent-green-light);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin: 0 auto 16px;
+  text-align: center;
+}
+
+.quote-text-container {
+  position: relative;
+  display: inline-block;
+  max-width: 90%;
+  padding: 0 28px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.quote-mark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem;
+  color: rgba(168, 77, 58, 0.4);
+  line-height: 1;
+  position: absolute;
+  user-select: none;
+}
+
+.quote-mark.open {
+  top: -8px;
+  left: 0;
+}
+
+.quote-mark.close {
+  bottom: -16px;
+  right: 0;
+}
+
+.result-poetic-quote {
+  font-family: var(--font-round);
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.85;
+  text-align: center;
+  padding: 0 4px;
+}
+
+.result-tagline {
+  font-family: var(--font-round);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.result-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.result-tag-pill {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-cream);
+  border: 1px solid var(--border-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-round);
+  font-weight: 700;
+}
+
+/* Flight Meta Details Grid */
+.ticket-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  background: var(--bg-cream);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  border: 1px dashed var(--border-dashed);
+  margin-bottom: 18px;
+  font-family: var(--font-round);
+}
+
+.meta-item {
+  text-align: center;
+}
+
+.meta-label {
+  font-size: 10px;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.meta-val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-dark);
+  font-family: var(--font-mono);
+}
+
+/* Animated Stamp Badge */
+.stamp-seal {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  width: 76px;
+  height: 76px;
+  border: 2px dashed var(--accent-red);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-red);
+  font-family: var(--font-round);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  opacity: 0;
+  animation: stampImpact 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.3s;
+}
+
+.stamp-seal span {
+  font-size: 10px;
+}
+
+@keyframes stampImpact {
+  0% { transform: scale(3) rotate(20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(-12deg); opacity: 0.85; }
+}
+
+/* Action Buttons */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-download {
+  width: 100%;
+  padding: 16px;
+  background: var(--accent-red);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-round);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(168, 77, 58, 0.3);
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-download:hover {
+  background: #903c2b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(168, 77, 58, 0.4);
+}
+
+.secondary-actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 14px;
+  background: #FFFFFF;
+  color: var(--text-dark);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-round);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-cream);
+  border-color: var(--border-dashed);
+}
+
+/* Toast Message */
+.toast-msg {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50px);
+  background: var(--text-dark);
+  color: #FFFFFF;
+  font-family: var(--font-round);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2000;
+}
+
+.toast-msg.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Hidden canvas for image export */
+#exportCanvas {
+  display: none;
+}

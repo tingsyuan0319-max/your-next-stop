@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Primary Meta Tags -->
+  <title>登機倒數：測一張暫停生活的單程機票 🗺️ ✦ 心理測驗</title>
+  <meta name="title" content="登機倒數：測一張暫停生活的單程機票 🗺️ ✦ 心理測驗">
+  <meta name="description" content="在常軌的邊緣稍作停頓，將未讀郵件與待辦清單留在對岸。憑直覺回答 8 道心境情境題，領取屬於你此刻靈魂的專屬避世登機證。">
+  <meta name="keywords" content="心理測驗, 機票測驗, 登機倒數, 旅行, 避世, 復古登機證, 單程機票">
+  <meta name="author" content="Traveler Project">
+
+  <!-- Open Graph / Facebook / LINE / Threads / Discord -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="登機倒數：測一張暫停生活的單程機票 🗺️ ✦ 心理測驗">
+  <meta property="og:description" content="在常軌的邊緣稍作停頓，將未讀郵件與待辦清單留在對岸。憑直覺回答 8 道心境情境題，領取屬於你此刻靈魂的專屬避世登機證。">
+  <meta property="og:image" content="banner.jpeg">
+  <meta property="og:image:alt" content="登機倒數：測一張暫停生活的單程機票">
+
+  <!-- Twitter / X -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="登機倒數：測一張暫停生活的單程機票 🗺️ ✦ 心理測驗">
+  <meta property="twitter:description" content="在常軌的邊緣稍作停頓，將未讀郵件與待辦清單留在對岸。憑直覺回答 8 道心境情境題，領取屬於你此刻靈魂的專屬避世登機證。">
+  <meta property="twitter:image" content="banner.jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Paper Texture & Frame Overlay -->
+  <div class="paper-texture"></div>
+  <div class="page-frame"></div>
+
+  <!-- Audio Toggle Switch (Floating Top-Right) -->
+  <div class="audio-switch">
+    <div class="vinyl-record" id="vinylBtn" title="點擊播放背景音樂" aria-label="背景音樂開關">
+      <div class="vinyl-center"></div>
+    </div>
+    <span class="vinyl-label" id="vinylLabel">BGM OFF</span>
+  </div>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- ==============================================
+         VIEW 1: LANDING COVER (首頁登機前登記)
+         ============================================== -->
+    <section class="view-section active" id="landingView">
+      <div class="magazine-header">
+        <span>VOL. 2027 / SPECIAL ESCAPE ISSUE</span>
+        <span>ONE-WAY TICKET</span>
+      </div>
+
+      <div class="editorial-badge">✦ PSYCHOLOGICAL JOURNEY ✦</div>
+      
+      <h1 class="magazine-cover-title">
+        登機倒數
+        <span>暫停生活的單程機票 🗺️</span>
+      </h1>
+      
+      <p class="magazine-subtitle">
+        在常軌的邊緣稍作停頓，將未讀郵件與待辦清單留在對岸。<br>
+        憑直覺回答 8 道心境情境題，領取屬於你此刻靈魂的避世坐標。
+      </p>
+
+      <div class="landing-card">
+        <div class="passenger-input-group">
+          <label class="passenger-label" for="passengerNameInput">
+            PASSENGER NAME / 乘客暱稱
+            <span>（印於專屬登機證上，限 10 字）</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon">✈</span>
+            <input type="text" id="passengerNameInput" class="passenger-input" placeholder="請輸入你的暱稱（留空則預設 TRAVELER）" maxlength="10">
+          </div>
+        </div>
+
+        <button class="btn-primary" id="startBtn">
+          <span>領取登機證，開始出逃</span>
+          <span>✦</span>
+        </button>
+
+        <div class="landing-footer-notes">
+          <span>GATE: OPENING</span>
+          <span>29 DESTINATIONS</span>
+          <span>FLIGHT: #2027</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 2: QUIZ RUNWAY & QUESTIONS (題目卡片)
+         ============================================== -->
+    <section class="view-section" id="quizView">
+      
+      <!-- Dashed Runway Progress Bar (Hidden for Q0, visible for Q1-Q8) -->
+      <div class="runway-progress-container" id="runwayContainer">
+        <div class="runway-status-row">
+          <span id="runwayStepText">RUNWAY CHECKPOINT 01/08</span>
+          <span id="runwayPercentText">12%</span>
+        </div>
+        <div class="runway-track">
+          <div class="runway-line"></div>
+          <div class="runway-fill" id="runwayFill"></div>
+          <div class="runway-airplane" id="runwayAirplane" style="left: 0%;">✈</div>
+        </div>
+      </div>
+
+      <!-- Question Card Container -->
+      <div class="quiz-box">
+        <div class="quiz-header-tag" id="quizHeaderTag">
+          <span class="quiz-number-stamp" id="qNumberStamp">Q01</span>
+        </div>
+
+        <h2 class="question-title" id="qTitle">題目載入中...</h2>
+        <p class="question-subtitle" id="qSubtitle" style="display: none;"></p>
+
+        <div class="options-list" id="optionsList">
+          <!-- Options injected via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 3: SOUL QUOTE BLIND PICK (靈魂盲選三選一)
+         ============================================== -->
+    <section class="view-section" id="blindPickView">
+      <div class="blind-pick-intro">
+        <span class="blind-pick-tag">✦ SOUL DESTINATION RESONANCE ✦</span>
+        <h2 class="blind-pick-title">直覺靈魂盲選</h2>
+        <p class="blind-pick-desc">在計算坐標前，請憑直覺選出一句最擊中你此刻靈魂的話。</p>
+      </div>
+
+      <div class="blind-cards-grid" id="blindCardsGrid">
+        <!-- 3 Quote Cards injected via JavaScript (NO CITY NAMES) -->
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 4: LOADING AIRPLANE ORBITING GLOBE (過場動畫)
+         ============================================== -->
+    <section class="view-section" id="loadingView">
+      <div class="loading-box">
+        <div class="globe-orbit-container">
+          <div class="retro-globe">
+            <div class="globe-grid-lines"></div>
+            <div class="globe-lat"></div>
+            <div class="globe-lon"></div>
+          </div>
+          <div class="orbit-ring">
+            <div class="orbiting-airplane">✈</div>
+          </div>
+        </div>
+
+        <div class="typewriter-status" id="typewriterText">正在核算靈魂疲勞指數...</div>
+        <div class="loading-subtext">✦ FLIGHT CALIBRATING ✦</div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 5: FINAL RESULT BOARDING PASS (結果頁)
+         ============================================== -->
+    <section class="view-section" id="resultView">
+      <div class="result-header">
+        <div class="result-congrats">✦ BOARDING PASS ISSUED ✦</div>
+        <h1 class="result-main-title">你的暫停生活登機證</h1>
+        <p class="result-comfort-subtitle">生活總在趕路，但偶爾也請記得停下腳步，<br>好好擁抱這片專屬於你的溫柔風景。</p>
+      </div>
+
+      <!-- Ticket Card Container -->
+      <div class="ticket-wrapper" id="ticketWrapper">
+        <div class="stamp-seal" id="stampSeal">
+          <span>BOARDED</span>
+          <span>2027.02.14</span>
+          <span>OFFICIAL</span>
+        </div>
+
+        <!-- The Cropped Vintage Illustrated Ticket Image -->
+        <div class="ticket-image-container">
+          <img src="" alt="機票插畫" class="ticket-img" id="resultTicketImg">
+        </div>
+
+        <!-- Poetic Quote & Story Box -->
+        <div class="result-quote-box">
+          <div class="quote-city-badge" id="resultCityBadge">廣島・HIROSHIMA</div>
+          
+          <div class="quote-text-container">
+            <span class="quote-mark open">“</span>
+            <p class="result-poetic-quote" id="resultPoeticQuote">在水流靜靜流淌的岸邊，<br>將所有柔軟的心願摺進微風裡。</p>
+            <span class="quote-mark close">”</span>
+          </div>
+
+          <p class="result-tagline" id="resultTagline">靜謐之境・和平與祈願之川</p>
+          
+          <div class="result-tags-row" id="resultTagsRow">
+            <!-- Tags injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Flight Metadata Grid -->
+        <div class="ticket-meta-grid">
+          <div class="meta-item">
+            <div class="meta-label">PASSENGER</div>
+            <div class="meta-val" id="metaPassenger">TRAVELER</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">FLIGHT</div>
+            <div class="meta-val" id="metaFlight">HIJ2027</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">GATE / SEAT</div>
+            <div class="meta-val" id="metaGateSeat">7A / 19C</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">DATE</div>
+            <div class="meta-val">2027.02.14</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="result-actions">
+        <button class="btn-download" id="downloadBtn">
+          <span>📥 下載保存我的逃亡機票</span>
+        </button>
+        <div class="secondary-actions-row">
+          <button class="btn-secondary" id="restartBtn">
+            <span>🔄 再測一次</span>
+          </button>
+          <button class="btn-secondary" id="shareBtn">
+            <span>🔗 複製測驗連結</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Message Element -->
+  <div class="toast-msg" id="toastMsg">已複製測驗連結！</div>
+
+  <!-- Hidden Canvas for 9:16 High-Res Image Export -->
+  <canvas id="exportCanvas" width="1080" height="1920"></canvas>
+
+  <!-- Scripts -->
+  <script src="quiz-data.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

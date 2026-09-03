@@ -1036,3 +1036,339 @@ body {
 #exportCanvas {
   display: none;
 }
+
+/* ===================================================
+   7. MOBILE RESPONSIVE MEDIA QUERIES (320px - 600px)
+   =================================================== */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 16px 14px 40px;
+  }
+
+  .audio-switch {
+    top: 14px;
+    right: 14px;
+  }
+
+  .vinyl-record {
+    width: 38px;
+    height: 38px;
+  }
+
+  .vinyl-center {
+    width: 12px;
+    height: 12px;
+  }
+
+  .vinyl-label {
+    display: none;
+  }
+
+  /* 1. Landing Cover Mobile */
+  .magazine-header {
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+  }
+
+  .editorial-badge {
+    font-size: 10px;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+
+  .magazine-cover-title {
+    font-size: 1.65rem;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .magazine-cover-title span {
+    font-size: 1.55rem;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .magazine-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    padding-left: 10px;
+  }
+
+  .landing-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .passenger-label {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .passenger-label span {
+    display: block;
+    font-size: 10px;
+    margin-top: 2px;
+  }
+
+  .passenger-input {
+    font-size: 13px;
+    padding: 12px 12px 12px 38px;
+  }
+
+  .input-icon {
+    left: 12px;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    font-size: 14.5px;
+    padding: 14px 16px;
+  }
+
+  .landing-footer-notes {
+    font-size: 9.5px;
+    margin-top: 14px;
+  }
+
+  /* 2. Runway Mobile */
+  .runway-progress-container {
+    margin-bottom: 18px;
+  }
+
+  .runway-status-row {
+    font-size: 10.5px;
+  }
+
+  /* 3. Quiz Card Mobile */
+  .quiz-box {
+    padding: 22px 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .quiz-number-stamp {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+
+  .question-title {
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+
+  .options-list {
+    gap: 10px;
+  }
+
+  .option-item {
+    padding: 14px 14px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+
+  .option-letter {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .option-text-main {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  /* 4. Blind Pick Mobile */
+  .blind-pick-intro {
+    margin-bottom: 18px;
+  }
+
+  .blind-pick-tag {
+    font-size: 10.5px;
+  }
+
+  .blind-pick-title {
+    font-size: 1.3rem;
+  }
+
+  .blind-pick-desc {
+    font-size: 0.85rem;
+  }
+
+  .blind-cards-grid {
+    gap: 12px;
+  }
+
+  .blind-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .blind-quote-text {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .blind-card-action {
+    font-size: 11px;
+    margin-top: 10px;
+  }
+
+  /* 5. Loading Mobile */
+  .loading-box {
+    padding: 30px 10px;
+  }
+
+  .globe-orbit-container {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 24px;
+  }
+
+  .retro-globe {
+    width: 80px;
+    height: 80px;
+  }
+
+  .orbit-ring {
+    width: 130px;
+    height: 130px;
+  }
+
+  .typewriter-status {
+    font-size: 1.1rem;
+    min-height: 32px;
+  }
+
+  /* 6. Result View Mobile */
+  .result-header {
+    margin-bottom: 18px;
+  }
+
+  .result-congrats {
+    font-size: 10.5px;
+  }
+
+  .result-main-title {
+    font-size: 1.55rem;
+  }
+
+  .result-comfort-subtitle {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    padding: 0 6px;
+    margin-top: 6px;
+  }
+
+  .ticket-wrapper {
+    padding: 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 18px;
+  }
+
+  .stamp-seal {
+    width: 58px;
+    height: 58px;
+    top: 8px;
+    right: 12px;
+  }
+
+  .stamp-seal span {
+    font-size: 8px;
+  }
+
+  .ticket-image-container {
+    padding: 4px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+
+  .result-quote-box {
+    padding: 18px 12px 16px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+
+  .quote-city-badge {
+    font-size: 10.5px;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+
+  .quote-text-container {
+    padding: 0 16px;
+    margin-bottom: 8px;
+  }
+
+  .quote-mark {
+    font-size: 1.8rem;
+  }
+
+  .quote-mark.open {
+    top: -6px;
+    left: -2px;
+  }
+
+  .quote-mark.close {
+    bottom: -12px;
+    right: -2px;
+  }
+
+  .result-poetic-quote {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  .result-tagline {
+    font-size: 0.82rem;
+  }
+
+  .result-tags-row {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .result-tag-pill {
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+
+  /* 4-column flight metadata table on mobile */
+  .ticket-meta-grid {
+    padding: 10px 8px;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .meta-label {
+    font-size: 8.5px;
+    letter-spacing: 0.5px;
+  }
+
+  .meta-val {
+    font-size: 11px;
+    letter-spacing: -0.3px;
+  }
+
+  /* Buttons */
+  .result-actions {
+    gap: 10px;
+  }
+
+  .btn-download {
+    padding: 14px;
+    font-size: 14.5px;
+  }
+
+  .secondary-actions-row {
+    gap: 8px;
+  }
+
+  .btn-secondary {
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+}

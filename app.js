@@ -158,7 +158,14 @@ document.addEventListener('DOMContentLoaded', () => {
       optItem.innerHTML = html;
 
       optItem.addEventListener('click', () => {
-        handleOptionSelect(qData, opt);
+        // Prevent double clicks
+        if (optItem.classList.contains('selected')) return;
+        optItem.classList.add('selected');
+        audioCtrl.playClickSound();
+
+        setTimeout(() => {
+          handleOptionSelect(qData, opt);
+        }, 110);
       });
 
       elements.optionsList.appendChild(optItem);
@@ -167,8 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Option Selection Handler
   function handleOptionSelect(qData, opt) {
-    audioCtrl.playClickSound();
-
     if (qData.isBranching) {
       // Q0 Choice
       state.selectedPool = opt.pool;

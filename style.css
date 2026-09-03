@@ -466,46 +466,44 @@ body {
   border-radius: var(--radius-md);
   padding: 18px 20px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   gap: 16px;
   position: relative;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.option-item:hover {
+/* Touch Active & Clicked State */
+.option-item:active,
+.option-item.selected {
+  background: #FFF5F0;
   border-color: var(--accent-red);
-  background: #FFFCFA;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(168, 77, 58, 0.08);
+  transform: scale(0.98);
 }
 
-.option-item:active {
-  transform: scale(0.99);
-}
-
-.option-letter {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg-cream);
-  border: 1.5px solid var(--border-dashed);
-  color: var(--text-dark);
-  font-family: var(--font-round);
-  font-size: 14px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 0;
-  transition: all 0.2s;
-}
-
-.option-item:hover .option-letter {
+.option-item:active .option-letter,
+.option-item.selected .option-letter {
   background: var(--accent-red);
   color: #FFFFFF;
   border-color: var(--accent-red);
+}
+
+/* Mouse Hover ONLY (Desktop) - Never triggers on mobile touch */
+@media (hover: hover) and (pointer: fine) {
+  .option-item:hover {
+    border-color: var(--accent-red);
+    background: #FFFCFA;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(168, 77, 58, 0.08);
+  }
+
+  .option-item:hover .option-letter {
+    background: var(--accent-red);
+    color: #FFFFFF;
+    border-color: var(--accent-red);
+  }
 }
 
 .option-content {
